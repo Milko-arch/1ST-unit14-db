@@ -317,7 +317,7 @@
         <div class="max-w-xl w-full text-center py-10 flex-grow flex flex-col justify-center">
             <div class="mb-4 animate__animated animate__fadeInDown">
                 <h1 class="text-7xl font-bold-game tracking-wider choco-title uppercase">Footprints</h1>
-                <p class="text-3xl font-game choco-subtitle mt-2 uppercase tracking-widest">FIRST GRADE UNIT 14</p>
+                <p class="text-3xl font-game choco-subtitle mt-2 uppercase tracking-widest">SECOND GRADE UNIT 14</p>
                 <p class="text-lg font-game opacity-50 mt-1 uppercase text-orange-200/70">Academy Adventure</p>
             </div>
             
@@ -1150,7 +1150,7 @@
         function saveResultsToExcel(scorePercentage) {
             const data = {
                 name: state.studentName,
-                grade: "1ST UNIT 14",
+                grade: "2nd UNIT 14",
                 testResult: scorePercentage + "%",
                 date: new Date().toLocaleString()
             };
@@ -1305,7 +1305,7 @@
             doc.setFontSize(11);
             doc.text("For successfully completing all levels and missions of the English Vocabulary Quest", w / 2, 104, { align: 'center' });
             doc.setFont("helvetica", "bold");
-            doc.text("NEW VOCABULARY QUEST  •  1ST GRADE  •  UNIT 14", w / 2, 110, { align: 'center' });
+            doc.text("NEW VOCABULARY QUEST  •  2nd GRADE  •  UNIT 14", w / 2, 110, { align: 'center' });
             
             // 9. Lista de Vocabulario Dominado
             doc.setFontSize(8.5);
