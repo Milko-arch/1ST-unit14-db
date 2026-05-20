@@ -1214,41 +1214,175 @@
             const w = doc.internal.pageSize.getWidth();
             const h = doc.internal.pageSize.getHeight();
             
+            // 1. Fondo Blanco del Lienzo
             doc.setFillColor(255, 255, 255);
             doc.rect(0, 0, w, h, 'F');
-            doc.setDrawColor(99, 102, 241);
-            doc.setLineWidth(5);
-            doc.rect(10, 10, w-20, h-20);
             
+            // 2. Marco Doble Elegante Cósmico
+            // Marco exterior Indigo
+            doc.setDrawColor(99, 102, 241);
+            doc.setLineWidth(2.5);
+            doc.rect(8, 8, w - 16, h - 16);
+            
+            // Marco interior Oro/Chocolate suave
+            doc.setDrawColor(212, 163, 115);
+            doc.setLineWidth(1);
+            doc.rect(11, 11, w - 22, h - 22);
+
+            // 3. Generación de Emojis como Imágenes de Alta Calidad para compatibilidad PDF completa
+            function renderEmojiToDataURL(emoji, size = 128) {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                ctx.font = `${size * 0.75}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(emoji, size / 2, size / 2);
+                return canvas.toDataURL('image/png');
+            }
+
+            // Renderizar emojis espaciales requeridos
+            const imgRocket = renderEmojiToDataURL('🚀');
+            const imgUFO = renderEmojiToDataURL('🛸');
+            const imgSaturn = renderEmojiToDataURL('🪐');
+            const imgComet = renderEmojiToDataURL('☄️');
+            const imgTrophy = renderEmojiToDataURL('🏆');
+            const imgStar = renderEmojiToDataURL('🌟');
+
+            // 4. Posicionamiento Estratégico de Emojis del Espacio
+            doc.addImage(imgRocket, 'PNG', 20, 20, 22, 22);
+            doc.addImage(imgUFO, 'PNG', w - 42, 20, 22, 22);
+            doc.addImage(imgSaturn, 'PNG', 20, h - 42, 22, 22);
+            doc.addImage(imgComet, 'PNG', w - 42, h - 42, 22, 22);
+
+            // 5. Constelación de Estrellas de Fondo (Vectores pequeños)
+            doc.setFillColor(253, 224, 71); // Amarillo suave de estrellas
+            const starPoints = [
+                [45, 50], [250, 55], [38, 140], [258, 145],
+                [85, 25], [215, 25], [95, 185], [205, 185],
+                [148, 20], [278, 100], [18, 100], [105, 80], [195, 80]
+            ];
+            starPoints.forEach(([sx, sy]) => {
+                doc.ellipse(sx, sy, 0.6, 0.6, 'F');
+                doc.addImage(imgStar, 'PNG', sx - 2, sy - 2, 4, 4);
+            });
+            
+            // 6. Título y Encabezado del Diploma
             doc.setTextColor(30, 41, 59);
             doc.setFont("helvetica", "bold");
-            doc.setFontSize(36);
-            doc.text("DIPLOMA OF EXCELLENCE", w/2, 35, { align: 'center' });
-            
-            doc.setFontSize(12);
-            doc.text("FOOTPRINTS ENGLISH ACADEMY", w/2, 42, { align: 'center' });
-            
-            doc.setTextColor(79, 70, 229);
-            doc.setFontSize(44);
-            doc.text(name, w/2, 75, { align: 'center' });
-            
-            doc.setTextColor(71, 85, 105);
-            doc.setFontSize(14);
-            doc.text("For successfully mastering the English Mission Words", w/2, 88, { align: 'center' });
-            doc.text("NEW VOCABULARY QUEST 1ST GRADE UNIT 14", w/2, 95, { align: 'center' });
-            
             doc.setFontSize(10);
+            doc.text("★ ★ ★   S P A C E   E X P L O R E R   Q U E S T   ★ ★ ★", w / 2, 34, { align: 'center' });
+
+            doc.setTextColor(79, 70, 229); // Indigo Principal
+            doc.setFontSize(32);
+            doc.text("DIPLOMA OF EXCELLENCE", w / 2, 48, { align: 'center' });
+            
+            doc.setTextColor(212, 163, 115); // Color Oro Suave
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(13);
+            doc.text("FOOTPRINTS ENGLISH ACADEMY", w / 2, 55, { align: 'center' });
+            
+            // 7. Nombre del Estudiante
             doc.setTextColor(100, 116, 139);
-            doc.text("WORDS MASTERED:", w/2, 110, { align: 'center' });
-            const wordsList = originalVocabulary.map(v => v.word).join("  •  ");
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.text("THIS CERTIFICATE IS PROUDLY PRESENTED TO THE COSMIC EXPLORER", w / 2, 74, { align: 'center' });
+            
+            doc.setTextColor(30, 41, 59); // Navy Profundo
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(38);
+            doc.text(name, w / 2, 90, { align: 'center' });
+
+            // Línea decorativa inferior de Oro para el nombre
+            doc.setDrawColor(212, 163, 115);
+            doc.setLineWidth(1.5);
+            doc.line(w / 2 - 60, 94, w / 2 + 60, 94);
+            
+            // 8. Logro y Texto Descriptivo
+            doc.setTextColor(71, 85, 105);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(11);
+            doc.text("For successfully completing all levels and missions of the English Vocabulary Quest", w / 2, 104, { align: 'center' });
+            doc.setFont("helvetica", "bold");
+            doc.text("NEW VOCABULARY QUEST  •  1ST GRADE  •  UNIT 14", w / 2, 110, { align: 'center' });
+            
+            // 9. Lista de Vocabulario Dominado
+            doc.setFontSize(8.5);
+            doc.setTextColor(148, 163, 184);
+            doc.text("M A S T E R E D   V O C A B U L A R Y :", w / 2, 122, { align: 'center' });
+            
+            // Mostrar palabras dominadas divididas en dos líneas con formato estético
+            const middle = Math.ceil(originalVocabulary.length / 2);
+            const line1 = originalVocabulary.slice(0, middle).map(v => v.word).join("   •   ");
+            const line2 = originalVocabulary.slice(middle).map(v => v.word).join("   •   ");
+            
+            doc.setFont("helvetica", "bold");
             doc.setFontSize(9);
             doc.setTextColor(79, 70, 229);
-            doc.text(wordsList, w/2, 120, { align: 'center' });
+            doc.text(line1, w / 2, 130, { align: 'center' });
+            doc.text(line2, w / 2, 136, { align: 'center' });
 
-            doc.setFontSize(16);
-            doc.setTextColor(244, 63, 94);
-            doc.text(`Final Score: ${score}%`, w/2, 150, { align: 'center' });
+            // 10. Sección de Pie de Página: Medalla de Oro y Firma de Autoridad
+            // LADO IZQUIERDO: Medalla del Espacio
+            // Cintas Rosas de la Medalla
+            doc.setDrawColor(244, 63, 94);
+            doc.setLineWidth(4.5);
+            doc.line(65, 162, 58, 182);
+            doc.line(75, 162, 82, 182);
             
+            // Círculo de Sello de Oro
+            doc.setFillColor(212, 163, 115);
+            doc.ellipse(70, 162, 13, 13, 'F');
+            doc.setDrawColor(255, 255, 255);
+            doc.setLineWidth(1);
+            doc.ellipse(70, 162, 11, 11, 'D');
+            
+            // Icono del Trofeo de Medalla
+            doc.addImage(imgTrophy, 'PNG', 61, 153, 18, 18);
+
+            // CENTRO: Insignia Cósmica del Puntaje
+            doc.setFillColor(79, 70, 229); // Fondo Indigo
+            doc.ellipse(w / 2, 165, 15, 15, 'F');
+            
+            doc.setDrawColor(212, 163, 115);
+            doc.setLineWidth(0.8);
+            doc.ellipse(w / 2, 165, 13, 13, 'D');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(13);
+            doc.text(`${score}%`, w / 2, 169.5, { align: 'center' });
+            
+            doc.setTextColor(100, 116, 139);
+            doc.setFontSize(8);
+            doc.text("SCORE ACHIEVED", w / 2, 147, { align: 'center' });
+
+            // LADO DERECHO: Línea de Firma del Mentor/Robot
+            doc.setDrawColor(148, 163, 184);
+            doc.setLineWidth(0.5);
+            doc.line(w - 90, 172, w - 50, 172);
+            
+            doc.setTextColor(71, 85, 105);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(9.5);
+            doc.text("Quest Commander Leo", w - 70, 178, { align: 'center' });
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8);
+            doc.setTextColor(148, 163, 184);
+            doc.text("ACADEMY MENTOR", w - 70, 182, { align: 'center' });
+            
+            // Dibujar firma decorativa de Leo de manera segura usando líneas nativas compatibles
+            doc.setDrawColor(99, 102, 241);
+            doc.setLineWidth(0.8);
+            doc.line(w - 85, 167, w - 80, 160);
+            doc.line(w - 80, 160, w - 75, 172);
+            doc.line(w - 75, 172, w - 70, 164);
+            doc.line(w - 70, 164, w - 65, 158);
+            doc.line(w - 65, 158, w - 60, 169);
+            doc.line(w - 60, 169, w - 55, 167);
+
+            // 11. Descargar Archivo PDF
             doc.save(`Diploma_${name}.pdf`);
         }
 
